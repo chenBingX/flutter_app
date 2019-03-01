@@ -163,7 +163,7 @@ class _AnimPage extends State<AnimPage> with TickerProviderStateMixin {
                             child: RaisedButton(
                               onPressed: () => playCornerAnim(),
                               textColor: Colors.white,
-                              child: Text("变球"),
+                              child: Text("变圆"),
                             )),
                       ),
                       Expanded(
