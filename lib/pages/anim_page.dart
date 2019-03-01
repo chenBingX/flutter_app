@@ -14,6 +14,8 @@ class _AnimPage extends State<AnimPage> with TickerProviderStateMixin {
   var xAngle = 0.0;
   var yAngle = 0.0;
   var zAngle = 0.0;
+  var scale = 1.0;
+  var corner = 0.0;
 
   @override
   void initState() {
@@ -49,18 +51,26 @@ class _AnimPage extends State<AnimPage> with TickerProviderStateMixin {
               transform: Matrix4.identity()
                 ..rotateX(xAngle)
                 ..rotateY(yAngle)
-                ..rotateZ(zAngle),
+                ..rotateZ(zAngle)
+                ..scale(scale),
               child: Opacity(
                 opacity: opacity,
                 child: Container(
                   width: w,
                   height: h,
+                  // 有了 decoration，就不能设置颜色了
+                  // 在 decoration 中设置颜色
+                  decoration: BoxDecoration(
+                    color: Colors.lightBlueAccent,
+                    // 设置圆角
+                    borderRadius: BorderRadius.all(Radius.circular(corner)),
+                  ),
                   margin: EdgeInsets.only(left: x, top: y),
-                  color: Colors.lightBlueAccent,
                 ),
               ),
             ),
           ),
+          // 第一行
           Container(
             margin: EdgeInsets.only(top: 16),
             child: Column(
@@ -95,9 +105,85 @@ class _AnimPage extends State<AnimPage> with TickerProviderStateMixin {
                         child: Container(
                             margin: EdgeInsets.only(left: 3, right: 6),
                             child: RaisedButton(
-                              onPressed: () => playRotateAnim(),
+                              onPressed: () => playXRotateAnim(),
                               textColor: Colors.white,
-                              child: Text("旋转动画"),
+                              child: Text("X轴旋转动画"),
+                            )),
+                      ),
+                    ],
+                  ),
+                ),
+                // 第二行
+                Container(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: <Widget>[
+                      Expanded(
+                        flex: 1,
+                        child: Container(
+                            margin: EdgeInsets.only(left: 6, right: 3),
+                            child: RaisedButton(
+                              onPressed: () => playYRotateAnim(),
+                              textColor: Colors.white,
+                              child: Text("Y轴旋转动画"),
+                            )),
+                      ),
+                      Expanded(
+                        flex: 1,
+                        child: Container(
+                            margin: EdgeInsets.only(left: 3, right: 3),
+                            child: RaisedButton(
+                              onPressed: () => playZRotateAnim(),
+                              textColor: Colors.white,
+                              child: Text("Z轴旋转动画"),
+                            )),
+                      ),
+                      Expanded(
+                        flex: 1,
+                        child: Container(
+                            margin: EdgeInsets.only(left: 3, right: 6),
+                            child: RaisedButton(
+                              onPressed: () => playScaleAnim(),
+                              textColor: Colors.white,
+                              child: Text("缩放动画"),
+                            )),
+                      ),
+                    ],
+                  ),
+                ),
+                // 第三行
+                Container(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: <Widget>[
+                      Expanded(
+                        flex: 1,
+                        child: Container(
+                            margin: EdgeInsets.only(left: 6, right: 3),
+                            child: RaisedButton(
+                              onPressed: () => playCornerAnim(),
+                              textColor: Colors.white,
+                              child: Text("变球"),
+                            )),
+                      ),
+                      Expanded(
+                        flex: 1,
+                        child: Container(
+                            margin: EdgeInsets.only(left: 3, right: 3),
+                            child: RaisedButton(
+                              onPressed: () => {},
+                              textColor: Colors.white,
+                              child: Text("--"),
+                            )),
+                      ),
+                      Expanded(
+                        flex: 1,
+                        child: Container(
+                            margin: EdgeInsets.only(left: 3, right: 6),
+                            child: RaisedButton(
+                              onPressed: () => {},
+                              textColor: Colors.white,
+                              child: Text("--"),
                             )),
                       ),
                     ],
@@ -112,8 +198,12 @@ class _AnimPage extends State<AnimPage> with TickerProviderStateMixin {
   }
 
   // ignore: invalid_required_param
-  playAnim(@required var updateFunc, var begin, var end,
-      {var resetFunc, var duration = 800, var curve = Curves.linear}) {
+  playAnim(@required var updateFunc,
+      {var begin,
+      var end,
+      var resetFunc,
+      var duration = 800,
+      var curve = Curves.linear}) {
     var controller = AnimationController(
         vsync: this, duration: Duration(milliseconds: duration));
 //    final anim = Tween(begin: begin, end: end).animate(controller);
@@ -132,48 +222,60 @@ class _AnimPage extends State<AnimPage> with TickerProviderStateMixin {
   }
 
   playTransitionAnim() {
-    playAnim(
-        (anim) {
+    playAnim((anim) {
 //          x = (1 - anim.value) * 300.0;
-          y = (anim.value) * 400.0;
-        },
-        0.0,
-        400.0,
-        resetFunc: (anim) {
+      y = (anim.value) * 400.0;
+    }, resetFunc: (anim) {
 //          x = 0;
-          y = 0;
-        },
-        duration: 1500,
-        curve: Curves.bounceOut);
+      y = 0;
+    }, duration: 1500, curve: Curves.bounceOut);
   }
 
   playOpacityAnim() {
-    playAnim(
-        (anim) {
-          opacity = 1 - anim.value;
-        },
-        1.0,
-        0.0,
-        resetFunc: (anim) {
-          opacity = 1.0;
-        },
-        duration: 1000);
+    playAnim((anim) {
+      opacity = 1 - anim.value;
+    }, resetFunc: (anim) {
+      opacity = 1.0;
+    }, duration: 1000);
   }
 
-  playRotateAnim() {
-    playAnim(
-        (anim) {
-          xAngle = (1 - anim.value) * 6.28;
-          yAngle = (1 - anim.value) * 6.28;
-          zAngle = (1 - anim.value) * 6.28;
-        },
-        0.0,
-        6.28,
-        resetFunc: (anim) {
-          xAngle = 0.0;
-          yAngle = 0.0;
-          zAngle = 0.0;
-        },
-        duration: 1000);
+  playXRotateAnim() {
+    playAnim((anim) {
+      xAngle = (1 - anim.value) * 6.28;
+    }, resetFunc: (anim) {
+      xAngle = 0.0;
+    }, duration: 1000);
+  }
+
+  playYRotateAnim() {
+    playAnim((anim) {
+      yAngle = (1 - anim.value) * 6.28;
+    }, resetFunc: (anim) {
+      yAngle = 0.0;
+    }, duration: 1000);
+  }
+
+  playZRotateAnim() {
+    playAnim((anim) {
+      zAngle = (1 - anim.value) * 6.28;
+    }, resetFunc: (anim) {
+      zAngle = 0.0;
+    }, duration: 1000);
+  }
+
+  playScaleAnim() {
+    playAnim((anim) {
+      scale = anim.value + 1.0;
+    }, resetFunc: (anim) {
+      scale = 1.0;
+    }, duration: 1000);
+  }
+
+  playCornerAnim() {
+    playAnim((anim) {
+      corner = anim.value * 500;
+    }, resetFunc: (anim) {
+      corner = 0;
+    }, duration: 5000);
   }
 }
