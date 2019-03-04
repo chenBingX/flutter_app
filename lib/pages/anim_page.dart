@@ -63,6 +63,7 @@ class _AnimPage extends State<AnimPage> with TickerProviderStateMixin {
                   // 有了 decoration，就不能设置颜色了
                   // 在 decoration 中设置颜色
                   decoration: BoxDecoration(
+//                    color: color,
                     color: color,
                     // 设置圆角
                     borderRadius: BorderRadius.all(Radius.circular(corner)),
@@ -165,7 +166,7 @@ class _AnimPage extends State<AnimPage> with TickerProviderStateMixin {
                             child: RaisedButton(
                               onPressed: () => playCornerAnim(),
                               textColor: Colors.white,
-                              child: Text("变球"),
+                              child: Text("变圆"),
                             )),
                       ),
                       Expanded(
@@ -234,8 +235,8 @@ class _AnimPage extends State<AnimPage> with TickerProviderStateMixin {
     }, resetFunc: (anim) {
 //          x = 0;
       y = 0;
-    }, duration: 1500
-        , curve: Curves.bounceOut
+    }, duration: 1000
+        , curve: Curves.fastOutSlowIn
     );
   }
 
