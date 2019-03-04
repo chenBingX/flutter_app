@@ -1,16 +1,37 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
+import 'package:flutter_app/datas/Page.dart';
 import 'package:flutter_app/datas/page_data.dart';
-import 'package:flutter_app/datas/user.dart';
 import 'package:flutter_app/pages/anim_page.dart';
 import 'package:flutter_app/pages/hero_page1.dart';
 
 class HomePage extends StatelessWidget {
+  var pages = <Page>[
+    Page('Jump With Data', (context) {
+      print("Jump With Data");
+    }),
+    Page('Animation Page', (context) {
+      Navigator.push(context, PageRouteBuilder(pageBuilder:
+          (BuildContext context, Animation animation,
+              Animation secondaryAnimation) {
+        return ScaleTransition(
+            scale: animation,
+            alignment: Alignment.bottomRight,
+            child: AnimPage());
+      }));
+    }),
+    Page('Hero Demo', (context) {
+      Navigator.push(
+          context, MaterialPageRoute(builder: (context) => HeroPageA()));
+    }),
+    Page('ListView Demo', (context) {
+
+    }),
+  ];
+
   final PageData data;
 
   // 带所需参数的构造函数
-  const HomePage({Key key, this.data}) : super(key: key);
+  HomePage({Key key, this.data}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -31,72 +52,44 @@ class HomePage extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
             Container(
-              color: Colors.grey,
               padding: EdgeInsets.only(left: 12, right: 12, top: 6, bottom: 6),
               child: Text(
                 data != null
                     ? "From pre page data：" + data.data
                     : 'There is no data!',
-                style: TextStyle(color: Colors.white),
+                textAlign: TextAlign.center,
+                style: TextStyle(color: Colors.black, fontSize: 18),
               ),
             ),
-            Container(
-              margin: EdgeInsets.only(top: 16),
-              child: RaisedButton(
-                textColor: Colors.white,
-                onPressed: () {
-                  Navigator.pop(context, 'HomePage response!');
-                },
-                child: Text("Back with data"),
-              ),
+            Expanded(
+              child: ListView.builder(
+                  itemCount: pages.length,
+                  itemBuilder: (BuildContext context, int index) {
+                    return _buildItem(context, pages[index], index);
+                  }),
             ),
-            // Anim Page
-            Container(
-              margin: EdgeInsets.only(top: 16),
-              child: RaisedButton(
-                textColor: Colors.white,
-                onPressed: () {
-//                  Navigator.push(context,
-//                      MaterialPageRoute(builder: (context) => AnimPage()));
-
-                  Navigator.push(context, PageRouteBuilder(pageBuilder:
-                      (BuildContext context, Animation animation,
-                          Animation secondaryAnimation) {
-                    return ScaleTransition(
-                        scale: animation,
-                        alignment: Alignment.bottomRight,
-                        child: AnimPage());
-                  }));
-                },
-                child: Text("Anim Page"),
-              ),
-            ),
-            // HeroDemo
-            Container(
-              margin: EdgeInsets.only(top: 16),
-              child: RaisedButton(
-                textColor: Colors.white,
-                onPressed: () {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => HeroPageA()));
-                },
-                child: Text("HeroDemo"),
-              ),
-            )
           ],
         ),
       ),
     );
   }
 
-  parserJson(){
-    var data = '';
-
-    // 解析Json
-    var userMap = jsonDecode(data);
-    var user = User.fromMap(userMap);
-
-    // 对象转Json
-    var userJson = jsonEncode(user);
+  _buildItem(BuildContext context, Page page, int index) {
+    return GestureDetector(
+        onTap: () => page.action(context),
+        child: Container(
+          margin: EdgeInsets.only(top: index == 0 ? 8 : 2),
+          alignment: Alignment.center,
+          color: Colors.white,
+          child: SizedBox(
+            height: 56,
+            child: Center(
+              child: Text(
+                page.pageName,
+                style: TextStyle(fontSize: 16),
+              ),
+            ),
+          ),
+        ));
   }
 }
