@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+
 class AnimPage extends StatefulWidget {
   @override
   State<StatefulWidget> createState() => _AnimPage();
@@ -16,6 +17,7 @@ class _AnimPage extends State<AnimPage> with TickerProviderStateMixin {
   var zAngle = 0.0;
   var scale = 1.0;
   var corner = 0.0;
+  var color = Colors.lightBlueAccent;
 
   @override
   void initState() {
@@ -61,7 +63,7 @@ class _AnimPage extends State<AnimPage> with TickerProviderStateMixin {
                   // 有了 decoration，就不能设置颜色了
                   // 在 decoration 中设置颜色
                   decoration: BoxDecoration(
-                    color: Colors.lightBlueAccent,
+                    color: color,
                     // 设置圆角
                     borderRadius: BorderRadius.all(Radius.circular(corner)),
                   ),
@@ -206,8 +208,12 @@ class _AnimPage extends State<AnimPage> with TickerProviderStateMixin {
       var curve = Curves.linear}) {
     var controller = AnimationController(
         vsync: this, duration: Duration(milliseconds: duration));
-//    final anim = Tween(begin: begin, end: end).animate(controller);
-    final anim = CurvedAnimation(parent: controller, curve: curve);
+    var anim;
+    if (begin != null || end != null) {
+      anim = Tween(begin: begin, end: end).animate(controller);
+    } else {
+      anim = CurvedAnimation(parent: controller, curve: curve);
+    }
     anim.addListener(() {
       print('value = ${anim.value}');
       setState(() => updateFunc(anim));
@@ -228,7 +234,9 @@ class _AnimPage extends State<AnimPage> with TickerProviderStateMixin {
     }, resetFunc: (anim) {
 //          x = 0;
       y = 0;
-    }, duration: 1500, curve: Curves.bounceOut);
+    }, duration: 1500
+        , curve: Curves.bounceOut
+    );
   }
 
   playOpacityAnim() {
@@ -278,4 +286,5 @@ class _AnimPage extends State<AnimPage> with TickerProviderStateMixin {
       corner = 0;
     }, duration: 5000);
   }
+
 }

@@ -1,19 +1,47 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/datas/page_data.dart';
 import 'package:flutter_app/pages/anim_page.dart';
+import 'package:flutter_app/pages/anim_page2.dart';
+import 'package:flutter_app/pages/message_page.dart';
+import 'package:flutter_app/pages/test_page.dart';
 
-class HomePage extends StatelessWidget {
-  final PageData data;
+class HomePage extends StatefulWidget {
 
-  // 带所需参数的构造函数
-  const HomePage({Key key, this.data}) : super(key: key);
+  @override
+  State<StatefulWidget> createState() {
+    // TODO: implement createState
+    return _HomePage();
+  }
+
+}
+
+class _HomePage extends State<HomePage> {
+
+  var message = 'Welcome!';
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    print("initState");
+//    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
+    print("build HomePage");
     // TODO: implement build
     return Scaffold(
         appBar: AppBar(
-          title: Text('Home Page'),
+            title:
+            GestureDetector(
+              onTap: () {
+                Navigator.push(context, MaterialPageRoute(builder: (context) {
+                    return TestPage();
+                }));
+              },
+              child: Text('Home Page'),
+
+            )
         ),
         body: _buildBody(context));
   }
@@ -29,11 +57,7 @@ class HomePage extends StatelessWidget {
             Container(
               color: Colors.grey,
               padding: EdgeInsets.only(left: 12, right: 12, top: 6, bottom: 6),
-              child: Text(
-                data != null
-                    ? "From pre page data：" + data.data
-                    : 'There is no data!',
-                style: TextStyle(color: Colors.white),
+              child: Text(message, style: TextStyle(color: Colors.white),
               ),
             ),
             Container(
@@ -41,9 +65,17 @@ class HomePage extends StatelessWidget {
               child: RaisedButton(
                 textColor: Colors.white,
                 onPressed: () {
-                  Navigator.pop(context, 'HomePage response!');
+                  var data = PageData('Hi, it\'s Home Page!');
+                  Navigator.push(context, MaterialPageRoute(
+                      builder: (context) => MessagePage(data: data))).then((
+                      result) {
+                    print('received message');
+                    setState(() {
+                      message = result;
+                    });
+                  });
                 },
-                child: Text("Back with data"),
+                child: Text("Message Page"),
               ),
             ),
             Container(
@@ -62,4 +94,30 @@ class HomePage extends StatelessWidget {
       ),
     );
   }
+
+  @override
+  void didUpdateWidget(HomePage oldWidget) {
+    print("didUpdateWidget");
+    super.didUpdateWidget(oldWidget);
+  }
+
+  @override
+  void didChangeDependencies() {
+    print("didChangeDependencies");
+    super.didChangeDependencies();
+  }
+
+  @override
+  void deactivate() {
+    print("deactivate");
+    super.deactivate();
+  }
+
+  @override
+  void dispose() {
+    print("dispose");
+    super.dispose();
+  }
+
+
 }
