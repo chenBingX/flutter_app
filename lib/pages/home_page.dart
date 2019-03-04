@@ -26,9 +26,18 @@ class _HomePage extends State<HomePage> {
   void initState() {
     // TODO: implement initState
     print("initState");
+    super.initState();
+
     pages = <Page>[
-      Page('Jump With Data', (context) {
-        print("Jump With Data");
+      Page('Message Page', (context) {
+        var data = PageData('Hi, it\'s Home Page!');
+        Navigator.push(context, MaterialPageRoute(
+            builder: (context) => MessagePage(data: data))).then((result) {
+          print('received message');
+          setState(() {
+            message = result;
+          });
+        });
       }),
       Page('Animation Page', (context) {
         Navigator.push(context, PageRouteBuilder(pageBuilder:
@@ -44,29 +53,16 @@ class _HomePage extends State<HomePage> {
         Navigator.push(
             context, MaterialPageRoute(builder: (context) => HeroPageA()));
       }),
-      Page('', (context){
-        var data = PageData('Hi, it\'s Home Page!');
-        Navigator.push(context, MaterialPageRoute(
-            builder: (context) => MessagePage(data: data))).then((
-            result) {
-          print('received message');
-          setState(() {
-            message = result;
-          });
-        });
-      }),
       Page('ListView Demo', (context) {
 
       }),
     ];
 
-    super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
     print("build HomePage");
-    // TODO: implement build
     return Scaffold(
         appBar: AppBar(
             title:
@@ -95,7 +91,7 @@ class _HomePage extends State<HomePage> {
               padding: EdgeInsets.only(left: 12, right: 12, top: 6, bottom: 6),
               child: Text(message,
                 textAlign: TextAlign.center,
-                style: TextStyle(color: Colors.black, fontSize: 18),
+                style: TextStyle(color: Colors.grey, fontSize: 18),
               ),
             ),
             Expanded(
@@ -153,6 +149,4 @@ class _HomePage extends State<HomePage> {
     print("dispose");
     super.dispose();
   }
-
-
 }

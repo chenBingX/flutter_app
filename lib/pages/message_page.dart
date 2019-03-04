@@ -26,7 +26,8 @@ class MessagePage extends StatelessWidget {
 
   _buildBody(BuildContext context) {
     return Center(
-      child: Text(data != null ? "Message：" + data.data : 'There is no data!'),
+      child: Text(data != null ? "Message：" + data.data : 'There is no data!',
+        style: TextStyle(fontSize: 18),),
     );
   }
 }
