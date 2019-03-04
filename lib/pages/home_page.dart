@@ -1,6 +1,10 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_app/datas/page_data.dart';
+import 'package:flutter_app/datas/user.dart';
 import 'package:flutter_app/pages/anim_page.dart';
+import 'package:flutter_app/pages/hero_page1.dart';
 
 class HomePage extends StatelessWidget {
   final PageData data;
@@ -46,20 +50,53 @@ class HomePage extends StatelessWidget {
                 child: Text("Back with data"),
               ),
             ),
+            // Anim Page
+            Container(
+              margin: EdgeInsets.only(top: 16),
+              child: RaisedButton(
+                textColor: Colors.white,
+                onPressed: () {
+//                  Navigator.push(context,
+//                      MaterialPageRoute(builder: (context) => AnimPage()));
+
+                  Navigator.push(context, PageRouteBuilder(pageBuilder:
+                      (BuildContext context, Animation animation,
+                          Animation secondaryAnimation) {
+                    return ScaleTransition(
+                        scale: animation,
+                        alignment: Alignment.bottomRight,
+                        child: AnimPage());
+                  }));
+                },
+                child: Text("Anim Page"),
+              ),
+            ),
+            // HeroDemo
             Container(
               margin: EdgeInsets.only(top: 16),
               child: RaisedButton(
                 textColor: Colors.white,
                 onPressed: () {
                   Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => AnimPage()));
+                      MaterialPageRoute(builder: (context) => HeroPageA()));
                 },
-                child: Text("Anim Page"),
+                child: Text("HeroDemo"),
               ),
             )
           ],
         ),
       ),
     );
+  }
+
+  parserJson(){
+    var data = '';
+
+    // 解析Json
+    var userMap = jsonDecode(data);
+    var user = User.fromMap(userMap);
+
+    // 对象转Json
+    var userJson = jsonEncode(user);
   }
 }

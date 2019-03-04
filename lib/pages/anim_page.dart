@@ -16,6 +16,7 @@ class _AnimPage extends State<AnimPage> with TickerProviderStateMixin {
   var zAngle = 0.0;
   var scale = 1.0;
   var corner = 0.0;
+  var color = Colors.blue;
 
   @override
   void initState() {
@@ -61,7 +62,8 @@ class _AnimPage extends State<AnimPage> with TickerProviderStateMixin {
                   // 有了 decoration，就不能设置颜色了
                   // 在 decoration 中设置颜色
                   decoration: BoxDecoration(
-                    color: Colors.lightBlueAccent,
+//                    color: Colors.lightBlueAccent,
+                    color: color,
                     // 设置圆角
                     borderRadius: BorderRadius.all(Radius.circular(corner)),
                   ),
@@ -171,7 +173,7 @@ class _AnimPage extends State<AnimPage> with TickerProviderStateMixin {
                         child: Container(
                             margin: EdgeInsets.only(left: 3, right: 3),
                             child: RaisedButton(
-                              onPressed: () => {},
+                              onPressed: () => playColorAnim(),
                               textColor: Colors.white,
                               child: Text("--"),
                             )),
@@ -228,7 +230,7 @@ class _AnimPage extends State<AnimPage> with TickerProviderStateMixin {
     }, resetFunc: (anim) {
 //          x = 0;
       y = 0;
-    }, duration: 1500, curve: Curves.bounceOut);
+    }, duration: 1000, curve: Curves.fastOutSlowIn);
   }
 
   playOpacityAnim() {
@@ -277,5 +279,23 @@ class _AnimPage extends State<AnimPage> with TickerProviderStateMixin {
     }, resetFunc: (anim) {
       corner = 0;
     }, duration: 5000);
+  }
+
+  playColorAnim() {
+    var controller =
+        AnimationController(vsync: this, duration: Duration(milliseconds: 500));
+    final anim =
+        ColorTween(begin: Colors.red, end: Colors.blue).animate(controller);
+    anim.addListener(() {
+      print('value = ${anim.value}');
+      setState(() => color = anim.value);
+    });
+    controller.addStatusListener((state) {
+      if (state == AnimationStatus.completed) {
+        controller.dispose();
+        setState(() => color = Colors.blue);
+      }
+    });
+    controller.forward();
   }
 }
