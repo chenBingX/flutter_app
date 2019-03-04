@@ -235,8 +235,8 @@ class _AnimPage extends State<AnimPage> with TickerProviderStateMixin {
     }, resetFunc: (anim) {
 //          x = 0;
       y = 0;
-    }, duration: 1000
-        , curve: Curves.fastOutSlowIn
+    }, duration: 1500
+        , curve: Curves.bounceOut
     );
   }
 

@@ -77,13 +77,13 @@ List<Photo> photos = <Photo>[
   ),
 ];
 
-class HeroPageA extends StatelessWidget {
+class HeroPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final Orientation orientation = MediaQuery.of(context).orientation;
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Hero PageA'),
+        title: const Text('Hero Page'),
       ),
       body: Column(
         children: <Widget>[
@@ -124,21 +124,21 @@ class GridDemoPhotoItem extends StatelessWidget {
   void showPhoto(BuildContext context) {
     Navigator.push(context,
         MaterialPageRoute<void>(builder: (BuildContext context) {
-      return Scaffold(
-        appBar: AppBar(title: Text('Hero PageB')),
-        body: SizedBox.expand(
-          child: Hero(
-            tag: photo.tag,
-            child: ClipRect(
-              child: Image.asset(
-                photo.assetName,
-                package: photo.assetPackage,
-                fit: BoxFit.cover,
-              ),
-            ),
-          ),
-        ),
-      );
+          return GestureDetector(
+              onTap: () => Navigator.pop(context),
+              child: SizedBox.expand(
+                child: Hero(
+                  tag: photo.tag,
+                  child: ClipRect(
+                    child: Image.asset(
+                      photo.assetName,
+                      package: photo.assetPackage,
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                ),
+              )
+          );
     }));
   }
 
