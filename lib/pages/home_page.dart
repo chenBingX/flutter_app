@@ -97,8 +97,13 @@ class _HomePage extends State<HomePage> {
               ),
             ),
             Expanded(
-              child: ListView.builder(
+              child: ListView.separated(
+                  // 分割线构造器
+                  separatorBuilder: (BuildContext context, int index) {
+                    return Divider(color: Colors.red,height: 1,);
+                  },
                   itemCount: pages.length,
+                  // 子 Widget 构造器
                   itemBuilder: (BuildContext context, int index) {
                     return _buildItem(context, pages[index], index);
                   }),
@@ -113,7 +118,7 @@ class _HomePage extends State<HomePage> {
     return GestureDetector(
         onTap: () => page.action(context),
         child: Container(
-          margin: EdgeInsets.only(top: index == 0 ? 8 : 2),
+          margin: EdgeInsets.only(top: index == 0 ? 8 : 0),
           alignment: Alignment.center,
           color: Colors.white,
           child: SizedBox(

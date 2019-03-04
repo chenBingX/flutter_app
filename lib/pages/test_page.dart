@@ -6,14 +6,16 @@ class TestPage extends StatelessWidget {
     // TODO: implement build
     return Scaffold(
       appBar: AppBar(),
-      body: Container(
+        body: Align(
+          // 对齐方式
         alignment: Alignment.center,
-        color: Colors.lightBlue,
-        child: Text(
-          'Hello, Flutter!',
-          style: TextStyle(decoration: TextDecoration.none),
+          // 子 Widget
+          child: SizedBox(
+              width: 300,
+              height: 300,
+              child: Container(color: Colors.amber)
         ),
-      ),
+        )
     );
   }
 }
