@@ -79,25 +79,42 @@ class _ListViewPage extends State<ListViewPage> {
               ],
             ),
             Container(
-              alignment: Alignment.topLeft,
-              padding: EdgeInsets.only(left: 12, right: 12, top: 8, bottom: 12),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  Text(
-                    product.desc,
-                    style: TextStyle(color: Colors.grey[350], fontSize: 14),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.only(top: 6),
-                    child: Text(
-                      '¥${product.price}',
-                      style: TextStyle(fontSize: 20, color: Colors.red),
+                alignment: Alignment.topLeft,
+                padding:
+                    EdgeInsets.only(left: 12, right: 12, top: 8, bottom: 12),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: <Widget>[
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        Text(
+                          product.desc,
+                          style:
+                              TextStyle(color: Colors.grey[350], fontSize: 14),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.only(top: 6),
+                          child: Text(
+                            '¥${product.price}',
+                            style: TextStyle(fontSize: 20, color: Colors.red),
+                          ),
+                        )
+                      ],
                     ),
-                  )
-                ],
-              ),
-            )
+                    GestureDetector(
+                      onTap: () => {
+                            setState(() {
+                              product.favorite = !product.favorite;
+                            })
+                          },
+                      child: Icon(
+                        Icons.favorite,
+                        color: product.favorite ? Colors.red : Colors.grey[300],
+                      ),
+                    )
+                  ],
+                ))
           ],
         ),
       ),

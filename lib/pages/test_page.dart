@@ -1,21 +1,44 @@
 import 'package:flutter/material.dart';
 
 class TestPage extends StatelessWidget {
+  var controller = TextEditingController();
+  var focusNode = FocusNode();
+
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
     return Scaffold(
       appBar: AppBar(),
-        body: Align(
+      body: Align(
           // 对齐方式
-        alignment: Alignment.center,
+          alignment: Alignment.center,
           // 子 Widget
-          child: SizedBox(
-              width: 300,
-              height: 300,
-              child: Container(color: Colors.amber)
-        ),
-        )
+          child: Column(
+            children: <Widget>[
+              TextField(
+                autofocus: true,
+                focusNode: focusNode,
+                decoration: InputDecoration(
+                  icon: Icon(Icons.add_a_photo),
+                  labelText: '用户名',
+                  hintText: '用户名或邮箱',
+                  counterText: '100',
+                  filled: true,
+                  fillColor: Colors.amber,
+                  prefixIcon: Icon(Icons.person),
+                  suffixIcon: Icon(Icons.person),
+                  border: InputBorder.none,
+                ),
+                textInputAction: TextInputAction.join,
+                controller: controller,
+              ),
+              TextFormField(
+                validator: (v) {
+                  return v.length > 2 ? '不能超过2个字' : null;
+                },
+              )
+            ],
+          )),
     );
   }
 }
