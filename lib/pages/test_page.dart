@@ -9,12 +9,15 @@ class TestPage extends StatelessWidget {
     // TODO: implement build
     return Scaffold(
       appBar: AppBar(),
-      body: Align(
+      resizeToAvoidBottomInset: false,
+      primary: true,
+      body: Container(
           // 对齐方式
-          alignment: Alignment.center,
+          alignment: Alignment.bottomCenter,
           // 子 Widget
           child: Column(
             children: <Widget>[
+              Padding(padding: EdgeInsets.only(top: 500)),
               TextField(
                 autofocus: true,
                 focusNode: focusNode,

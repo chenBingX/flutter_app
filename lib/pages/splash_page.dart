@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/datas/page_data.dart';
 
-import 'home_page.dart';
+import 'package:flutter_app/home_page.dart';
 
 class SplashPage extends StatefulWidget {
   @override
