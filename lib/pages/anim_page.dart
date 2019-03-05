@@ -232,10 +232,8 @@ class _AnimPage extends State<AnimPage> with TickerProviderStateMixin {
 
   playTransitionAnim() {
     playAnim((anim) {
-//          x = (1 - anim.value) * 300.0;
       y = (anim.value) * (MediaQuery.of(context).size.height * 0.5 - h);
     }, resetFunc: (anim) {
-//          x = 0;
       y = 0;
     }, duration: 1500, curve: Curves.bounceOut);
   }
