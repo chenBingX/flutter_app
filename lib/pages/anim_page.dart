@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-
 class AnimPage extends StatefulWidget {
   @override
   State<StatefulWidget> createState() => _AnimPage();
@@ -37,6 +36,9 @@ class _AnimPage extends State<AnimPage> with TickerProviderStateMixin {
   }
 
   _build(context) {
+    print('screenHeight = ${MediaQuery.of(context).size.height}');
+    print('screenWidth = ${MediaQuery.of(context).size.width}');
+    print('aspectRatio = ${MediaQuery.of(context).size.aspectRatio}');
     return Container(
       color: Colors.white,
       child: Column(
@@ -44,7 +46,7 @@ class _AnimPage extends State<AnimPage> with TickerProviderStateMixin {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
           Container(
-            height: 500,
+            height: MediaQuery.of(context).size.height * 0.5,
             alignment: Alignment.center,
             decoration:
                 BoxDecoration(border: Border.all(color: Colors.red, width: 1)),
@@ -231,13 +233,11 @@ class _AnimPage extends State<AnimPage> with TickerProviderStateMixin {
   playTransitionAnim() {
     playAnim((anim) {
 //          x = (1 - anim.value) * 300.0;
-      y = (anim.value) * 400.0;
+      y = (anim.value) * (MediaQuery.of(context).size.height * 0.5 - h);
     }, resetFunc: (anim) {
 //          x = 0;
       y = 0;
-    }, duration: 1500
-        , curve: Curves.bounceOut
-    );
+    }, duration: 1500, curve: Curves.bounceOut);
   }
 
   playOpacityAnim() {
@@ -287,5 +287,4 @@ class _AnimPage extends State<AnimPage> with TickerProviderStateMixin {
       corner = 0;
     }, duration: 5000);
   }
-
 }

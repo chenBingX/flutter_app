@@ -12,13 +12,11 @@ class SplashPage extends StatefulWidget {
 }
 
 class _SplashPage extends State<SplashPage> {
-
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -27,10 +25,12 @@ class _SplashPage extends State<SplashPage> {
       child: Stack(
         alignment: Alignment(0, 0.5),
         children: <Widget>[
-          Container(
-            decoration: BoxDecoration(
-                image: DecorationImage(
-                    image: AssetImage('images/splash1.jpg'))),
+          SizedBox.expand(
+            child: ClipRect(
+                child: Image.asset(
+              "images/splash1.jpg",
+              fit: BoxFit.cover,
+            )),
           ),
           GestureDetector(
             // 设置点击事件
@@ -38,13 +38,16 @@ class _SplashPage extends State<SplashPage> {
               jumpToHome(context);
             },
             child: Container(
-                padding: EdgeInsets.only(
-                    left: 32, top: 12, right: 32, bottom: 12),
+                padding:
+                    EdgeInsets.only(left: 32, top: 12, right: 32, bottom: 12),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.all(Radius.circular(6)),
                   gradient: LinearGradient(
                     colors: <Color>[
-                      Colors.cyan[300], Colors.green[300], Colors.red[300]],
+                      Colors.cyan[300],
+                      Colors.green[300],
+                      Colors.red[300]
+                    ],
                   ),
                 ),
                 child: Text(
@@ -60,8 +63,6 @@ class _SplashPage extends State<SplashPage> {
   void jumpToHome(BuildContext context) {
     // 使用 Navigator 跳转页面
     Navigator.push(
-        context,
-        MaterialPageRoute(
-            builder: (context) => HomePage()));
+        context, MaterialPageRoute(builder: (context) => HomePage()));
   }
 }
