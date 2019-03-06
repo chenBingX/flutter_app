@@ -6,6 +6,7 @@ import 'package:flutter_app/pages/hero_page.dart';
 import 'package:flutter_app/pages/list_view_page.dart';
 import 'package:flutter_app/pages/message_page.dart';
 import 'package:flutter_app/pages/scanffold_page.dart';
+import 'package:flutter_app/pages/tab_page.dart';
 import 'package:flutter_app/pages/test_page.dart';
 
 
@@ -62,6 +63,10 @@ class _HomePage extends State<HomePage> {
       Page('Scaffold Page', (context) {
         Navigator.push(
             context, MaterialPageRoute(builder: (context) => ScaffoldPage()));
+      }),
+      Page('Tab Page', (context) {
+        Navigator.push(
+            context, MaterialPageRoute(builder: (context) => TabPage()));
       }),
     ];
 

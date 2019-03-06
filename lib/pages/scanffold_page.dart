@@ -11,6 +11,7 @@ class _ScaffoldPage extends State<ScaffoldPage>
     with SingleTickerProviderStateMixin {
   var tabs = ["单程", "往返", "多程"];
   TabController tabController;
+  var _currentIndex = 0;
 
   @override
   void initState() {
@@ -51,39 +52,47 @@ class _ScaffoldPage extends State<ScaffoldPage>
             unselectedLabelColor: Colors.grey,
             indicatorColor: Colors.white,
             controller: tabController,
-            tabs: tabs.map((e) => Tab(text: e)).toList()),
+            tabs: tabs.map((e) => Tab(child: Text(e,style: TextStyle(fontSize: 20),))).toList()),
       ),
       body: TabBarView(controller: tabController, children: [
         Center(
           child: Text(
             '单程',
-            style: TextStyle(fontSize: 30),
+            style: TextStyle(fontSize: 80),
           ),
         ),
         Center(
           child: Text(
             '往返',
-            style: TextStyle(fontSize: 30),
+            style: TextStyle(fontSize: 80),
           ),
         ),
         Center(
           child: Text(
             '多程',
-            style: TextStyle(fontSize: 30),
+            style: TextStyle(fontSize: 80),
           ),
         )
       ]),
       bottomNavigationBar: BottomNavigationBar(
         items: [
-          BottomNavigationBarItem(icon: Icon(Icons.home), title: Text('首页')),
+          BottomNavigationBarItem(icon: Icon(Icons.home)
+                // 选中时
+              , activeIcon: Icon(Icons.pages)
+              , title: Text('首页')
+          ),
           BottomNavigationBarItem(
               icon: Icon(Icons.favorite), title: Text('收藏')),
           BottomNavigationBarItem(
               icon: Icon(Icons.add_shopping_cart), title: Text('订单')),
         ],
-        currentIndex: 0,
+        currentIndex: _currentIndex,
         fixedColor: Colors.blue,
-        onTap: (index) {},
+        onTap: (index) {
+          setState(() {
+            _currentIndex = index;
+          });
+        },
       ),
     );
   }
