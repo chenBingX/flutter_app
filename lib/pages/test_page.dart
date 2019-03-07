@@ -103,7 +103,8 @@ class TestPage extends StatelessWidget {
             alignment: Alignment.center,
             child: Text(
               'Hi, watch me!',
-              style: TextStyle(color:Colors.white, decoration: TextDecoration.none),
+              style: TextStyle(
+                  color: Colors.white, decoration: TextDecoration.none),
             ),
           ),
           Container(
@@ -122,10 +123,13 @@ class TestPage extends StatelessWidget {
                   color: Colors.orange,
                 )),
                 Expanded(
-                    child: Container(
-                  margin: EdgeInsets.only(left: 10),
-                  height: 160,
-                  color: Colors.orange,
+                    child: Opacity(
+                  opacity: 0.2,
+                  child: Container(
+                    margin: EdgeInsets.only(left: 10),
+                    height: 160,
+                    color: Colors.orange,
+                  ),
                 )),
               ],
             ),

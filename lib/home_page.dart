@@ -2,26 +2,24 @@ import 'package:flutter/material.dart';
 import 'package:flutter_app/datas/page.dart';
 import 'package:flutter_app/datas/page_data.dart';
 import 'package:flutter_app/pages/anim_page.dart';
+import 'package:flutter_app/pages/custom_scroll_view_page.dart';
 import 'package:flutter_app/pages/hero_page.dart';
 import 'package:flutter_app/pages/list_view_page.dart';
 import 'package:flutter_app/pages/message_page.dart';
+import 'package:flutter_app/pages/page_view_demo.dart';
 import 'package:flutter_app/pages/scanffold_page.dart';
 import 'package:flutter_app/pages/tab_page.dart';
 import 'package:flutter_app/pages/test_page.dart';
 
-
 class HomePage extends StatefulWidget {
-
   @override
   State<StatefulWidget> createState() {
     // TODO: implement createState
     return _HomePage();
   }
-
 }
 
 class _HomePage extends State<HomePage> {
-
   var pages;
   var message = 'Welcome!';
 
@@ -34,8 +32,10 @@ class _HomePage extends State<HomePage> {
     pages = <Page>[
       Page('Message Page', (context) {
         var data = PageData('Hi, it\'s Home Page!');
-        Navigator.push(context, MaterialPageRoute(
-            builder: (context) => MessagePage(data: data))).then((result) {
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => MessagePage(data: data))).then((result) {
           print('received message');
           setState(() {
             message = result;
@@ -45,7 +45,7 @@ class _HomePage extends State<HomePage> {
       Page('Animation Page', (context) {
         Navigator.push(context, PageRouteBuilder(pageBuilder:
             (BuildContext context, Animation animation,
-            Animation secondaryAnimation) {
+                Animation secondaryAnimation) {
           return ScaleTransition(
               scale: animation,
               alignment: Alignment.bottomRight,
@@ -68,8 +68,15 @@ class _HomePage extends State<HomePage> {
         Navigator.push(
             context, MaterialPageRoute(builder: (context) => TabPage()));
       }),
+      Page('CustomScrollView Page', (context) {
+        Navigator.push(
+            context, MaterialPageRoute(builder: (context) => CustomScrollViewPage()));
+      }),
+      Page('PageView Page', (context) {
+        Navigator.push(
+            context, MaterialPageRoute(builder: (context) => PageViewPage()));
+      }),
     ];
-
   }
 
   @override
@@ -77,17 +84,14 @@ class _HomePage extends State<HomePage> {
     print("build HomePage");
     return Scaffold(
         appBar: AppBar(
-            title:
-            GestureDetector(
-              onTap: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context) {
-                    return TestPage();
-                }));
-              },
-              child: Text('Home Page'),
-
-            )
-        ),
+            title: GestureDetector(
+          onTap: () {
+            Navigator.push(context, MaterialPageRoute(builder: (context) {
+              return TestPage();
+            }));
+          },
+          child: Text('Home Page'),
+        )),
         body: _buildBody(context));
   }
 
@@ -101,7 +105,8 @@ class _HomePage extends State<HomePage> {
           children: <Widget>[
             Container(
               padding: EdgeInsets.only(left: 12, right: 12, top: 6, bottom: 6),
-              child: Text(message,
+              child: Text(
+                message,
                 textAlign: TextAlign.center,
                 style: TextStyle(color: Colors.grey, fontSize: 18),
               ),
@@ -110,7 +115,10 @@ class _HomePage extends State<HomePage> {
               child: ListView.separated(
                   // 分割线构造器
                   separatorBuilder: (BuildContext context, int index) {
-                    return Divider(color: Colors.red,height: 1,);
+                    return Divider(
+                      color: Colors.red,
+                      height: 1,
+                    );
                   },
                   itemCount: pages.length,
                   // 子 Widget 构造器
