@@ -7,8 +7,11 @@ class TestPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
-    return normalWidget();
-//    return scaffoldWidget();
+//    return normalWidget();
+    return WillPopScope(child: scaffoldWidget(), onWillPop:  () async {
+      print('onWillPop');
+      return true;
+    });
   }
 
   normalWidget() {
