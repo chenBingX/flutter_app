@@ -8,6 +8,7 @@ import 'package:flutter_app/pages/list_view_page.dart';
 import 'package:flutter_app/pages/message_page.dart';
 import 'package:flutter_app/pages/page_view_demo.dart';
 import 'package:flutter_app/pages/scanffold_page.dart';
+import 'package:flutter_app/pages/single_child_scroll_view_page.dart';
 import 'package:flutter_app/pages/tab_page.dart';
 import 'package:flutter_app/pages/test_page.dart';
 
@@ -75,6 +76,10 @@ class _HomePage extends State<HomePage> {
       Page('PageView Page', (context) {
         Navigator.push(
             context, MaterialPageRoute(builder: (context) => PageViewPage()));
+      }),
+      Page('SingleChildScrollView Page', (context) {
+        Navigator.push(
+            context, MaterialPageRoute(builder: (context) => SingleChildScrollViewPage()));
       }),
     ];
   }

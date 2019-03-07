@@ -23,11 +23,19 @@ class _CustomScrollViewPage extends State<CustomScrollViewPage> {
 
   Random random;
 
+  ScrollController scrollController;
+
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     random = Random();
+
+    scrollController = ScrollController(
+        initialScrollOffset: 150
+    )..addListener((){
+      print('d = ${scrollController.offset}');
+    });
   }
 
   @override
@@ -36,6 +44,7 @@ class _CustomScrollViewPage extends State<CustomScrollViewPage> {
     return Container(
       color: Colors.white,
       child: CustomScrollView(
+        controller: scrollController,
         slivers: <Widget>[
           const SliverAppBar(
             title: Text('SliverAppBar'),
