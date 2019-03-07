@@ -3,19 +3,23 @@ import 'package:flutter/material.dart';
 class TestPage extends StatelessWidget {
   var controller = TextEditingController();
   var focusNode = FocusNode();
+  var text = 'Hi, touch me!';
 
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
-//    return normalWidget();
-    return WillPopScope(child: scaffoldWidget(), onWillPop:  () async {
-      print('onWillPop');
-      return true;
-    });
+    return normalWidget(context);
+//    return WillPopScope(child: scaffoldWidget(),
+//        onWillPop: () async {
+//      print('onWillPop');
+//      // 返回 true 表示允许返回
+//      // 返回 false 表示不允许返回
+//      return true;
+//    });
   }
 
-  normalWidget() {
-    return _buildSafeAreaTest();
+  normalWidget(BuildContext context) {
+    return _buildSafeAreaTest(context);
   }
 
   scaffoldWidget() {
@@ -94,22 +98,28 @@ class TestPage extends StatelessWidget {
     );
   }
 
-  _buildSafeAreaTest() {
+  _buildSafeAreaTest(BuildContext context) {
     return Container(
       color: Colors.white,
       child: SafeArea(
           child: Column(
         children: <Widget>[
-          Container(
-            height: 80,
-            color: Colors.blue,
-            alignment: Alignment.center,
-            child: Text(
-              'Hi, watch me!',
-              style: TextStyle(
-                  color: Colors.white, decoration: TextDecoration.none),
+          Listener(
+            onPointerUp: (e){
+              Navigator.pop(context);
+            },
+            child: Container(
+              height: 80,
+              color: Colors.blue,
+              alignment: Alignment.center,
+              child: Text(
+                text,
+                style: TextStyle(
+                    color: Colors.white, decoration: TextDecoration.none),
+              ),
             ),
-          ),
+          )
+          ,
           Container(
             height: 160,
             color: Colors.amber,
