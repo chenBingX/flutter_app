@@ -7,11 +7,13 @@ class TestPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
-//    return normalWidget();
-    return WillPopScope(child: scaffoldWidget(), onWillPop:  () async {
-      print('onWillPop');
-      return true;
-    });
+    return normalWidget();
+//    return WillPopScope(
+//        child: scaffoldWidget(),
+//        onWillPop: () async {
+//          print('onWillPop');
+//          return true;
+//        });
   }
 
   normalWidget() {
@@ -100,15 +102,24 @@ class TestPage extends StatelessWidget {
       child: SafeArea(
           child: Column(
         children: <Widget>[
-          Container(
-            height: 80,
-            color: Colors.blue,
-            alignment: Alignment.center,
-            child: Text(
-              'Hi, watch me!',
-              style: TextStyle(
-                  color: Colors.white, decoration: TextDecoration.none),
-            ),
+          IgnorePointer(
+            ignoring: false,
+            child: Listener(
+                onPointerMove: (e) {
+                  print(
+                      'move: timeStamp =  ${e.timeStamp}, pointer = ${e.pointer}, position = ${e.position}'
+                      ', orientation = ${e.orientation}');
+                },
+                child: Container(
+                  height: 80,
+                  color: Colors.blue,
+                  alignment: Alignment.center,
+                  child: Text(
+                    'Hi, watch me!',
+                    style: TextStyle(
+                        color: Colors.white, decoration: TextDecoration.none),
+                  ),
+                )),
           ),
           Container(
             height: 160,

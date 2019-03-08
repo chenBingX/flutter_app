@@ -6,6 +6,7 @@ import 'package:flutter_app/pages/custom_scroll_view_page.dart';
 import 'package:flutter_app/pages/hero_page.dart';
 import 'package:flutter_app/pages/list_view_page.dart';
 import 'package:flutter_app/pages/message_page.dart';
+import 'package:flutter_app/pages/notification_demo.dart';
 import 'package:flutter_app/pages/page_view_demo.dart';
 import 'package:flutter_app/pages/scanffold_page.dart';
 import 'package:flutter_app/pages/single_child_scroll_view_page.dart';
@@ -80,6 +81,10 @@ class _HomePage extends State<HomePage> {
       Page('SingleChildScrollView Page', (context) {
         Navigator.push(
             context, MaterialPageRoute(builder: (context) => SingleChildScrollViewPage()));
+      }),
+      Page('Notification Page', (context) {
+        Navigator.push(
+            context, MaterialPageRoute(builder: (context) => NotificationPage()));
       }),
     ];
   }
