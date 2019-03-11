@@ -3,6 +3,7 @@ import 'package:flutter_app/datas/page.dart';
 import 'package:flutter_app/datas/page_data.dart';
 import 'package:flutter_app/pages/anim_page.dart';
 import 'package:flutter_app/pages/custom_scroll_view_page.dart';
+import 'package:flutter_app/pages/file_demo.dart';
 import 'package:flutter_app/pages/hero_page.dart';
 import 'package:flutter_app/pages/list_view_page.dart';
 import 'package:flutter_app/pages/message_page.dart';
@@ -85,6 +86,10 @@ class _HomePage extends State<HomePage> {
       Page('Notification Page', (context) {
         Navigator.push(
             context, MaterialPageRoute(builder: (context) => NotificationPage()));
+      }),
+      Page('FileDemo Page', (context) {
+        Navigator.push(
+            context, MaterialPageRoute(builder: (context) => FileDemoPage()));
       }),
     ];
   }
