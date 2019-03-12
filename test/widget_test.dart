@@ -12,18 +12,40 @@ import 'package:flutter_test/flutter_test.dart';
 void main() {
   testWidgets('Counter increments smoke test', (WidgetTester tester) async {
     // Build our app and trigger a frame.
-    await tester.pumpWidget(SplashPage());
+//    await tester.pumpWidget(SplashPage());
+//
+//    // Verify that our counter starts at 0.
+//    expect(find.text('0'), findsOneWidget);
+//    expect(find.text('1'), findsNothing);
+//
+//    // Tap the '+' icon and trigger a frame.
+//    await tester.tap(find.byIcon(Icons.add));
+//    await tester.pump();
+//
+//    // Verify that our counter has incremented.
+//    expect(find.text('0'), findsNothing);
+//    expect(find.text('1'), findsOneWidget);
 
-    // Verify that our counter starts at 0.
-    expect(find.text('0'), findsOneWidget);
-    expect(find.text('1'), findsNothing);
+    A a = B.func();
 
-    // Tap the '+' icon and trigger a frame.
-    await tester.tap(find.byIcon(Icons.add));
-    await tester.pump();
-
-    // Verify that our counter has incremented.
-    expect(find.text('0'), findsNothing);
-    expect(find.text('1'), findsOneWidget);
   });
+
+//  a.func();
+}
+
+test<T>(){
+  if(T is A){
+  }
+}
+
+class A{
+ A.func(){
+    print('A');
+  }
+}
+
+class B extends A{
+  B.func() : super.func(){
+    print('B');
+  }
 }
