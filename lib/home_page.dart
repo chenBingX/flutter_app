@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_app/datas/page.dart';
 import 'package:flutter_app/datas/page_data.dart';
 import 'package:flutter_app/pages/anim_page.dart';
+import 'package:flutter_app/pages/backdrop_filter_page.dart';
+import 'package:flutter_app/pages/clip_xxx_page.dart';
 import 'package:flutter_app/pages/custom_scroll_view_page.dart';
 import 'package:flutter_app/pages/file_demo.dart';
 import 'package:flutter_app/pages/hero_page.dart';
@@ -95,6 +97,16 @@ class _HomePage extends State<HomePage> {
       Page('HttpDemo Page', (context) {
         Navigator.push(
             context, MaterialPageRoute(builder: (context) => HttpDemoPage()));
+      }),
+
+      Page('ClipXXX Page', (context) {
+        Navigator.push(
+            context, MaterialPageRoute(builder: (context) => ClipXXXPage()));
+      }),
+
+      Page('BackDropFilter Page', (context) {
+        Navigator.push(
+            context, MaterialPageRoute(builder: (context) => BackDropFilterPage()));
       }),
     ];
   }

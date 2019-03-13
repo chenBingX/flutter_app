@@ -9,6 +9,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_app/pages/splash_page.dart';
 import 'package:flutter_test/flutter_test.dart';
 
+import 'test.dart';
+
 void main() {
   testWidgets('Counter increments smoke test', (WidgetTester tester) async {
     // Build our app and trigger a frame.
@@ -26,26 +28,29 @@ void main() {
 //    expect(find.text('0'), findsNothing);
 //    expect(find.text('1'), findsOneWidget);
 
-    A a = B.func();
 
+  });
+
+
+  test('', () async {
+    SortedCollection coll = new SortedCollection(sort);
+    assert(coll.compare is Function);
+    assert(coll.compare is Compare);
+    Compare test = (Object a, Object b){
+      return 0;
+    };
   });
 
 //  a.func();
 }
 
-test<T>(){
-  if(T is A){
-  }
+typedef int Compare(Object a, Object b);
+
+class SortedCollection {
+  Compare compare;
+
+  SortedCollection(this.compare);
 }
 
-class A{
- A.func(){
-    print('A');
-  }
-}
-
-class B extends A{
-  B.func() : super.func(){
-    print('B');
-  }
-}
+// Initial, broken implementation.
+int sort(Object a, Object b) => 0;

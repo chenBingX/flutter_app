@@ -83,7 +83,7 @@ class HeroPage extends StatelessWidget {
     final Orientation orientation = MediaQuery.of(context).orientation;
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Hero Page'),
+        title: const Text('GridView Page'),
       ),
       body: Column(
         children: <Widget>[
@@ -95,9 +95,9 @@ class HeroPage extends StatelessWidget {
                 crossAxisCount: (orientation == Orientation.portrait) ? 2 : 3,
                 mainAxisSpacing: 4.0,
                 crossAxisSpacing: 4.0,
-                padding: const EdgeInsets.all(4.0),
                 childAspectRatio:
                     (orientation == Orientation.portrait) ? 1.0 : 1.3,
+                padding: const EdgeInsets.all(4.0),
                 children: photos.map<Widget>((Photo photo) {
                   return GridDemoPhotoItem(
                     photo: photo,

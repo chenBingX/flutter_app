@@ -20,7 +20,6 @@ class _HttpDemoPage extends State<HttpDemoPage> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    get();
   }
 
   @override
@@ -30,46 +29,73 @@ class _HttpDemoPage extends State<HttpDemoPage> {
         appBar: AppBar(
           title: Text('Http Demo'),
         ),
-        body: ListView.builder(
-            itemCount: content == null ? 0 : content.length,
-            itemBuilder: (BuildContext context, int position) {
-              return Padding(
-                padding: EdgeInsets.only(left: 12, right: 12, top: 10),
-                child: Card(
-                  clipBehavior: Clip.antiAlias,
-                  elevation: 5,
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(10))),
-                  child: Stack(
-                    fit: StackFit.passthrough,
-                    alignment: Alignment.bottomLeft,
-                    children: <Widget>[
-                      Container(
-                        height: 200,
-                        color: Colors.blue,
-                        child: Image.network(
-                          content[position].thumbnail_pic_s,
-                          fit: BoxFit.cover,
-                        ),
-                      ),
-                      Container(
-                        color: Colors.black38,
-                        padding: EdgeInsets.only(left: 12, top: 6, bottom: 6),
-                        child: Text(
-                          content[position].title,
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                          style: TextStyle(color: Colors.white, fontSize: 18),
-                        ),
-                      )
-                    ],
-                  ),
-                ),
-              );
+        body: FutureBuilder(
+            future: get(),
+            builder: (BuildContext context, AsyncSnapshot snapshot) {
+              if (snapshot.connectionState == ConnectionState.none) {
+                print('ConnectionState.none');
+              } else if (snapshot.connectionState == ConnectionState.active) {
+                print('ConnectionState.active');
+              } else if (snapshot.connectionState == ConnectionState.waiting) {
+                print('ConnectionState.waiting');
+              } else if (snapshot.connectionState == ConnectionState.done) {
+                print('ConnectionState.done');
+              }
+              print(snapshot);
+              if (snapshot.hasData) {
+                if (snapshot.data != null) {
+                  content = snapshot.data;
+                  return _buildListView();
+                }
+              } else {
+                return Center(
+                  child: RefreshProgressIndicator(),
+                );
+              }
             }));
   }
 
-  get() async {
+  ListView _buildListView() {
+    return ListView.builder(
+        itemCount: content == null ? 0 : content.length,
+        itemBuilder: (BuildContext context, int position) {
+          return Padding(
+            padding: EdgeInsets.only(left: 12, right: 12, top: 10),
+            child: Card(
+              clipBehavior: Clip.antiAlias,
+              elevation: 5,
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.all(Radius.circular(10))),
+              child: Stack(
+                fit: StackFit.passthrough,
+                alignment: Alignment.bottomLeft,
+                children: <Widget>[
+                  Container(
+                    height: 200,
+                    color: Colors.blue,
+                    child: Image.network(
+                      content[position].thumbnail_pic_s,
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                  Container(
+                    color: Colors.black38,
+                    padding: EdgeInsets.only(left: 12, top: 6, bottom: 6),
+                    child: Text(
+                      content[position].title,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: TextStyle(color: Colors.white, fontSize: 18),
+                    ),
+                  )
+                ],
+              ),
+            ),
+          );
+        });
+  }
+
+  Future<List<NewsData>> get() async {
     // 创建 HttpClient
     HttpClient httpClient = HttpClient();
     // 生成 uri
@@ -85,13 +111,12 @@ class _HttpDemoPage extends State<HttpDemoPage> {
       var responseBody = await response.transform(utf8.decoder).join();
       // 关闭client，通过该client发起的所有请求都会中止。
       httpClient.close();
-      Response responseData = Response.parse(responseBody, NewsData.fromMapList);
-      setState(() {
-        content = responseData.result.data;
-        print(content);
-      });
+      Response responseData =
+          Response.parse(responseBody, NewsData.fromMapList);
+      return responseData.result.data;
     } else {
       print('Error getting IP address:\nHttp status ${response.statusCode}');
+      return null;
     }
   }
 }
