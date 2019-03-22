@@ -17,8 +17,9 @@ Widget _widgetForRoute(String route) {
     case 'route2':
     case 'route3':
     default:
-      return Center(
-        child: Text('Unknown route: $route', textDirection: TextDirection.ltr),
-      );
+    return MaterialApp(
+      title: 'Flutter',
+      home: SplashPage(),
+    );
   }
 }

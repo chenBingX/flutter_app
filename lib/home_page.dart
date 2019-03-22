@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_app/datas/page.dart';
 import 'package:flutter_app/datas/page_data.dart';
 import 'package:flutter_app/pages/anim_page.dart';
 import 'package:flutter_app/pages/backdrop_filter_page.dart';
 import 'package:flutter_app/pages/clip_xxx_page.dart';
+import 'package:flutter_app/pages/custom_paint_page2.dart';
+import 'package:flutter_app/pages/custom_painter_page.dart';
 import 'package:flutter_app/pages/custom_scroll_view_page.dart';
 import 'package:flutter_app/pages/file_demo.dart';
 import 'package:flutter_app/pages/hero_page.dart';
@@ -34,6 +37,9 @@ class _HomePage extends State<HomePage> {
     // TODO: implement initState
     print("initState");
     super.initState();
+
+    MethodChannel channel = MethodChannel("foo");
+    channel.setMethodCallHandler((MethodCall call) async {});
 
     pages = <Page>[
       Page('Message Page', (context) {
@@ -75,8 +81,8 @@ class _HomePage extends State<HomePage> {
             context, MaterialPageRoute(builder: (context) => TabPage()));
       }),
       Page('CustomScrollView Page', (context) {
-        Navigator.push(
-            context, MaterialPageRoute(builder: (context) => CustomScrollViewPage()));
+        Navigator.push(context,
+            MaterialPageRoute(builder: (context) => CustomScrollViewPage()));
       }),
       Page('PageView Page', (context) {
         Navigator.push(
@@ -84,11 +90,13 @@ class _HomePage extends State<HomePage> {
       }),
       Page('SingleChildScrollView Page', (context) {
         Navigator.push(
-            context, MaterialPageRoute(builder: (context) => SingleChildScrollViewPage()));
+            context,
+            MaterialPageRoute(
+                builder: (context) => SingleChildScrollViewPage()));
       }),
       Page('Notification Page', (context) {
-        Navigator.push(
-            context, MaterialPageRoute(builder: (context) => NotificationPage()));
+        Navigator.push(context,
+            MaterialPageRoute(builder: (context) => NotificationPage()));
       }),
       Page('FileDemo Page', (context) {
         Navigator.push(
@@ -98,15 +106,30 @@ class _HomePage extends State<HomePage> {
         Navigator.push(
             context, MaterialPageRoute(builder: (context) => HttpDemoPage()));
       }),
-
       Page('ClipXXX Page', (context) {
         Navigator.push(
             context, MaterialPageRoute(builder: (context) => ClipXXXPage()));
       }),
-
       Page('BackDropFilter Page', (context) {
-        Navigator.push(
-            context, MaterialPageRoute(builder: (context) => BackDropFilterPage()));
+        Navigator.push(context,
+            MaterialPageRoute(builder: (context) => BackDropFilterPage()));
+      }),
+      Page('SimpleDialog', (context) {
+        showSimpleDialog(context);
+      }),
+      Page('AlertDialog', (context) {
+        showAlertDialog(context);
+      }),
+      Page('CustomDialog', (context) {
+        showCustomDialog(context);
+      }),
+      Page('CustomPainterPage', (context) {
+        Navigator.push(context,
+            MaterialPageRoute(builder: (context) => CustomPainterPage()));
+      }),
+      Page('CustomPainterPage2', (context) {
+        Navigator.push(context,
+            MaterialPageRoute(builder: (context) => CustomPainterPage2()));
       }),
     ];
   }
@@ -205,5 +228,97 @@ class _HomePage extends State<HomePage> {
   void dispose() {
     print("dispose");
     super.dispose();
+  }
+
+  void showAlertDialog(context) {
+    showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+              title: Text('Dialog'),
+              content: Text(('Dialog content..')),
+              actions: <Widget>[
+                new FlatButton(
+                  child: new Text("取消"),
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                ),
+                new FlatButton(
+                  child: new Text("确定"),
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                ),
+              ],
+            ));
+  }
+
+  void showCustomDialog(context) {
+    showDialog(
+      context: context,
+      builder: (_) => Padding(
+            padding: EdgeInsets.all(16),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: <Widget>[
+                Container(
+                  alignment: Alignment.center,
+                  color: Colors.white,
+                  child: Column(
+                    children: <Widget>[
+                      Padding(
+                        padding: EdgeInsets.only(top: 8),
+                        child: Text('Custom Dialog',
+                            style: TextStyle(
+                                fontSize: 16, decoration: TextDecoration.none)),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.only(top: 15, bottom: 8),
+                        child: FlatButton(
+                            onPressed: () {
+                              Navigator.pop(_);
+                            },
+                            child: Text('确定')),
+                      )
+                    ],
+                  ),
+                )
+              ],
+            ),
+          ),
+    );
+  }
+
+  void showSimpleDialog(context) {
+    showDialog(
+        context: context,
+        builder: (ctx) {
+          return SimpleDialog(
+            title: Text("SimpleDialog"),
+            titlePadding: EdgeInsets.all(10),
+            backgroundColor: Colors.amber,
+            elevation: 5,
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.all(Radius.circular(6))),
+            children: <Widget>[
+              ListTile(
+                title: Center(child: Text("Item_1"),),
+              ),
+              ListTile(
+                title: Center(child: Text("Item_2"),),
+              ),
+              ListTile(
+                title: Center(child: Text("Item_3"),),
+              ),
+              ListTile(
+                title: Center(child: Text("Close"),),
+                onTap: (){
+                  Navigator.pop(context);
+                },
+              ),
+            ],
+          );
+        });
   }
 }

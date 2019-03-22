@@ -1,5 +1,6 @@
 name: flutter_app
-description: A new Flutter module.
+#description: A new Flutter module.
+description: A new Flutter application.
 
 # The following defines the version and build number for your application.
 # A version number is three numbers separated by dots, like 1.2.43
@@ -33,9 +34,9 @@ dev_dependencies:
 
 # The following section is specific to Flutter.
 flutter:
-  module:
-    androidPackage: com.coorchice.flutter_app
-    iosBundleIdentifier: com.coorchice.flutter_app
+#  module:
+#    androidPackage: com.coorchice.flutter_app
+#    iosBundleIdentifier: com.coorchice.flutter_app
 
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
