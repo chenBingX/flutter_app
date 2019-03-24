@@ -1,8 +1,6 @@
 import 'dart:async';
 import 'dart:math';
 import 'dart:ui' as ui;
-import 'dart:io' as io;
-import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -27,6 +25,11 @@ class _CustomPainterPage2 extends State<CustomPainterPage2>
   void initState() {
     super.initState();
     deviceSize = ui.window.physicalSize / ratio;
+    ImageLoader.load("images/game_bg_1.png").then((img) {
+      setState(() {
+        background = img;
+      });
+    });
   }
 
   @override
@@ -34,12 +37,15 @@ class _CustomPainterPage2 extends State<CustomPainterPage2>
     return Material(
       child: Stack(
         children: <Widget>[
-          CustomPaint(
-            isComplex: true,
-            willChange: true,
-            size: Size(deviceSize.width, deviceSize.height),
-            painter: MyPainter(),
-          ),
+          Center(
+            child: CustomPaint(
+              isComplex: true,
+              willChange: true,
+              size: Size(deviceSize.width, deviceSize.height / 2),
+              painter: MyPainter.images(background),
+            ),
+          )
+          ,
           Positioned(
               top: MediaQuery.of(context).padding.bottom,
               child: IconButton(
@@ -57,13 +63,18 @@ class _CustomPainterPage2 extends State<CustomPainterPage2>
 }
 
 class MyPainter extends CustomPainter {
+
+  ui.Image background;
+
+  MyPainter.images(this.background);
+
   @override
   void paint(ui.Canvas canvas, ui.Size size) {
     Paint paint = Paint()
           ..isAntiAlias = true
-          ..color = Colors.orangeAccent
-          ..strokeWidth = 5
-          ..style = PaintingStyle.fill
+      ..color = Colors.grey[300]
+      ..strokeWidth = 3
+      ..style = PaintingStyle.fill
           ..filterQuality = FilterQuality.high
           ..strokeCap = StrokeCap.round
 //      ..strokeJoin = StrokeJoin.round
@@ -105,16 +116,115 @@ class MyPainter extends CustomPainter {
 //    paint..style = PaintingStyle.stroke;
 //    canvas.drawRect(rect, paint);
 
-    Rect rect = Rect.fromCircle(
-        center: Offset(size.width / 2, size.height / 2), radius: 140);
+//    Rect rect = Rect.fromCircle(
+//        center: Offset(size.width / 2, size.height / 2), radius: 140);
 //    canvas.drawArc(rect, 0, math.pi * 2, true, paint);
 
 //    Path path = Path()..addRect(rect.translate(20, 0));
 //    canvas.drawShadow(path, Colors.amberAccent, 20, true);
 
-    canvas.drawRect(rect, paint);
+//    canvas.drawRect(rect, paint);
+//
+//    canvas.drawColor(Colors.redAccent, BlendMode.color);
+//    if (background != null) {
+    Size imgSize = Size(
+        background.width.toDouble(), background.height.toDouble());
+    Rect dstRect = Rect.fromLTWH(0, 0, size.width, size.height);
+//      // 根据适配模式，计算适合的缩放信息
+//      FittedSizes fittedSizes = applyBoxFit(
+//          BoxFit.cover, imgSize, dstRect.size);
+//      // 获得一个图片区域中，指定大小的，居中位置处的 Rect
+//      Rect inputRect = Alignment.center.inscribe(
+//          fittedSizes.source, Offset.zero & imgSize);
+//      // 获得一个绘制区域内，指定大小的，居中位置处的 Rect
+//      Rect outputRect = Alignment.center.inscribe(
+//          fittedSizes.destination, dstRect);
+//      canvas.drawImageRect(background, inputRect, outputRect, paint);
+//      canvas.drawImageRect(background, Rect.fromLTWH(0, 0, 100, 100), dstRect, paint);
+//      canvas.save();
+//      canvas.translate(Alignment.center
+//          .inscribe(imgSize, Offset.zero & size)
+//          .left, Alignment.center
+//          .inscribe(imgSize, Offset.zero & size)
+//          .top);
+//      canvas.drawImage(background, Offset.zero, paint);
+//      canvas.drawRect(Rect.fromLTWH(0, 0, 100, 100), paint);
+//      canvas.restore();
 
-    canvas.drawColor(Colors.redAccent, BlendMode.color);
+//    canvas.drawImageNine(background, Offset.zero & imgSize, dstRect, paint);
+
+
+//    canvas.saveLayer(dstRect, Paint());
+//    canvas.saveLayer(dstRect, paint);
+//    canvas.drawImage(background, Offset.zero, paint);
+//    var paint2 = new Paint()..blendMode = BlendMode.hue
+//    ..color = Colors.amber;
+//    canvas.saveLayer(Rect.fromLTWH(0, 0, 100, 100), paint2);
+//    canvas.drawColor(Colors.amber, BlendMode.lighten);
+//    canvas.drawPaint(paint2);
+//    canvas.drawRect(Rect.fromLTWH(0, 0, 50, 50), Paint()..color=Colors.white);
+//    canvas.drawColor(Colors.amber, BlendMode.srcOut);
+//    canvas.drawRect(Rect.fromLTWH(100, 100, 50, 50), Paint()..color=Colors.red);
+//    canvas.save();
+//    canvas.restore();
+//    canvas.restore();
+//    canvas.restore();
+
+//    canvas.saveLayer(Rect.fromCircle(
+//        center: Offset(size.width / 2, size.height / 2), radius: 100), paint);
+//    // 用颜色填充整个绘制区域
+//    canvas.drawPaint(Paint()..color = Colors.blue);
+//    // 在绘制区域以外绘制一个矩形
+//    canvas.drawRect(Rect.fromLTWH(0, 0, 100, 100), Paint()..color = Colors.red);
+//    canvas.restore();
+
+//    canvas.drawImageRect(background, Offset.zero & imgSize, Rect.fromCircle(
+//        center: Offset(size.width / 2, size.height / 2), radius: 150), paint);
+//
+//    canvas.saveLayer(Rect.fromCircle(
+//        center: Offset(size.width / 2, size.height / 2), radius: 60), Paint()..color = Colors.red);
+//    canvas.drawPaint(Paint()..color = Colors.amber);
+//    canvas.restore();
+    canvas.drawRect(Offset.zero & size, paint);
+//    canvas.save();
+//    double r = sqrt(pow(size.width, 2) + pow(size.height, 2));
+//    print('r = $r');
+//    print('p = ${Point(r * cos(0), r * sin(0)).x}');
+//    double startAngle = atan(size.height / size.width);
+//    print('offsetAngle = ${startAngle}, pi/2=${pi / 2}');
+//    double tAngle = pi/2;
+//    Point p0 = Point(r * cos(startAngle), r * sin(startAngle));
+//    print('p0 = $p0');
+//    Point px = Point(r * cos(tAngle + startAngle), r * sin(tAngle + startAngle));
+//    print('px = $px');
+//    canvas.translate((p0.x - px.x)/2, (p0.y - px.y)/2);
+//    canvas.rotate(tAngle);
+//    print('p0.x - px.x = ${p0.x - px.x}, p0.y - px.y = ${p0.y - px.y}');
+//    canvas.drawRect(Offset.zero & size, Paint()
+//      ..color = Colors.pinkAccent);
+//    canvas.drawImage(background, Offset.zero, paint);
+//    canvas.restore();
+
+
+//    canvas.save();
+//    double r = sqrt(pow(size.width, 2) + pow(size.height, 2));
+//    double startAngle = atan(size.height / size.width);
+//    Point p0 = Point(r * cos(startAngle), r * sin(startAngle));
+//    double xAngle = pi / 4;
+//    Point px = Point(
+//        r * cos(xAngle + startAngle), r * sin(xAngle + startAngle));
+//    canvas.translate((p0.x - px.x) / 2, (p0.y - px.y) / 2);
+//    canvas.rotate(xAngle);
+//    canvas.drawRect(Rect.fromCircle(
+//        center: Offset(size.width / 2, size.height / 2), radius: 100), Paint()
+//      ..color = Colors.amber);
+//    canvas.restore();
+
+    canvas.save();
+    canvas.skew(0.2, 0);
+    canvas.drawImageRect(background, Offset.zero & imgSize,
+        Alignment.center.inscribe(imgSize, Offset.zero & size), paint);
+    canvas.restore();
 
   }
 
