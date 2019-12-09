@@ -15,10 +15,14 @@ allprojects {
         jcenter()
     }
 }
-
+repositories {
+    flatDir {
+        dirs 'libs', '../app/libs'
+    }
+}
 rootProject.buildDir = '../build'
 subprojects {
-    project.buildDir = "${rootProject.buildDir}/${project.name}"
+    project.buildDir = "${rootProject.buildDir}/app"
 }
 subprojects {
     project.evaluationDependsOn(':app')

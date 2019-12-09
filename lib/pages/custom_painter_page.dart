@@ -1,7 +1,7 @@
 import 'dart:async';
+import 'dart:io';
 import 'dart:math';
 import 'dart:ui' as ui;
-import 'dart:io' as io;
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -155,14 +155,15 @@ class ImageLoader {
   static Future<ui.Image> load(String url) async {
     ImageStream stream = AssetImage(url, bundle: getAssetBundle())
         .resolve(ImageConfiguration.empty);
+    ImageStream stream2 = FileImage(new File("/Users/gs/Downloads/1.jpeg")).resolve(ImageConfiguration.empty);
     Completer<ui.Image> completer = Completer<ui.Image>();
     void listener(ImageInfo frame, bool synchronousCall) {
       final ui.Image image = frame.image;
       completer.complete(image);
-      stream.removeListener(listener);
+      stream.removeListener(ImageStreamListener(listener));
     }
 
-    stream.addListener(listener);
+    stream.addListener(ImageStreamListener(listener));
     return completer.future;
   }
 }

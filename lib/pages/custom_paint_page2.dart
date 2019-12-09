@@ -44,8 +44,7 @@ class _CustomPainterPage2 extends State<CustomPainterPage2>
               size: Size(deviceSize.width, deviceSize.height / 2),
               painter: MyPainter.images(background),
             ),
-          )
-          ,
+          ),
           Positioned(
               top: MediaQuery.of(context).padding.bottom,
               child: IconButton(
@@ -63,7 +62,6 @@ class _CustomPainterPage2 extends State<CustomPainterPage2>
 }
 
 class MyPainter extends CustomPainter {
-
   ui.Image background;
 
   MyPainter.images(this.background);
@@ -72,9 +70,9 @@ class MyPainter extends CustomPainter {
   void paint(ui.Canvas canvas, ui.Size size) {
     Paint paint = Paint()
           ..isAntiAlias = true
-      ..color = Colors.grey[300]
-      ..strokeWidth = 3
-      ..style = PaintingStyle.fill
+          ..color = Colors.grey[300]
+          ..strokeWidth = 3
+          ..style = PaintingStyle.fill
           ..filterQuality = FilterQuality.high
           ..strokeCap = StrokeCap.round
 //      ..strokeJoin = StrokeJoin.round
@@ -127,8 +125,8 @@ class MyPainter extends CustomPainter {
 //
 //    canvas.drawColor(Colors.redAccent, BlendMode.color);
 //    if (background != null) {
-    Size imgSize = Size(
-        background.width.toDouble(), background.height.toDouble());
+    Size imgSize =
+        Size(background.width.toDouble(), background.height.toDouble());
     Rect dstRect = Rect.fromLTWH(0, 0, size.width, size.height);
 //      // 根据适配模式，计算适合的缩放信息
 //      FittedSizes fittedSizes = applyBoxFit(
@@ -152,7 +150,6 @@ class MyPainter extends CustomPainter {
 //      canvas.restore();
 
 //    canvas.drawImageNine(background, Offset.zero & imgSize, dstRect, paint);
-
 
 //    canvas.saveLayer(dstRect, Paint());
 //    canvas.saveLayer(dstRect, paint);
@@ -205,7 +202,6 @@ class MyPainter extends CustomPainter {
 //    canvas.drawImage(background, Offset.zero, paint);
 //    canvas.restore();
 
-
 //    canvas.save();
 //    double r = sqrt(pow(size.width, 2) + pow(size.height, 2));
 //    double startAngle = atan(size.height / size.width);
@@ -225,7 +221,6 @@ class MyPainter extends CustomPainter {
     canvas.drawImageRect(background, Offset.zero & imgSize,
         Alignment.center.inscribe(imgSize, Offset.zero & size), paint);
     canvas.restore();
-
   }
 
   @override
@@ -246,10 +241,10 @@ class ImageLoader {
     void listener(ImageInfo frame, bool synchronousCall) {
       final ui.Image image = frame.image;
       completer.complete(image);
-      stream.removeListener(listener);
+      stream.removeListener(ImageStreamListener(listener));
     }
 
-    stream.addListener(listener);
+    stream.addListener(ImageStreamListener(listener));
     return completer.future;
   }
 }

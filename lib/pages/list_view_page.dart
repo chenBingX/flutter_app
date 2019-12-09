@@ -12,7 +12,7 @@ const _assertPackage = 'flutter_gallery_assets';
 
 var productList = <Product>[
   Product('Backpack', 'products/backpack.png',
-      assetsPackage: _assertPackage, price: 1160, desc: '这个包能装下一整头大象！'),
+      assetsPackage: _assertPackage, price: 1188, desc: '这个包能装下一整头大象！'),
   Product('Belt', 'products/belt.png',
       assetsPackage: _assertPackage, price: 98, desc: '可能是世界上最长的皮带'),
   Product('Cup', 'products/cup.png',
