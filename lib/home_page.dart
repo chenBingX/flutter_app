@@ -1,3 +1,4 @@
+import 'package:button/splash_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_app/datas/page.dart';
@@ -130,6 +131,10 @@ class _HomePage extends State<HomePage> {
       Page('CustomPainterPage2', (context) {
         Navigator.push(context,
             MaterialPageRoute(builder: (context) => CustomPainterPage2()));
+      }),
+      Page('button', (context) {
+        Navigator.push(context,
+            MaterialPageRoute(builder: (context) => SplashPage()));
       }),
     ];
   }
