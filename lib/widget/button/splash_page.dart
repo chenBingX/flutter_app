@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_app/home_page.dart';
 
 class SplashPage extends StatefulWidget {
   @override
@@ -26,7 +25,7 @@ class _SplashPage extends State<SplashPage> {
           SizedBox.expand(
             child: ClipRect(
                 child: Image.asset(
-              "lib/icon/pic.jpg",
+              "images/splash.jpg",
               fit: BoxFit.cover,
             )),
           ),
@@ -49,7 +48,7 @@ class _SplashPage extends State<SplashPage> {
                   ),
                 ),
                 child: Text(
-                  'Welcome',
+                  'Button 0.0.2',
                   style: TextStyle(color: Colors.white, fontSize: 16),
                 )),
           ),
@@ -60,7 +59,7 @@ class _SplashPage extends State<SplashPage> {
 
   void jumpToHome(BuildContext context) {
     // 使用 Navigator 跳转页面
-    Navigator.push(
-        context, MaterialPageRoute(builder: (context) => HomePage()));
+//    Navigator.push(
+//        context, MaterialPageRoute(builder: (context) => HomePage()));
   }
 }

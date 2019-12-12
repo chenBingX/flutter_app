@@ -1,4 +1,3 @@
-import 'package:button/splash_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_app/datas/page.dart';
@@ -20,6 +19,7 @@ import 'package:flutter_app/pages/scanffold_page.dart';
 import 'package:flutter_app/pages/single_child_scroll_view_page.dart';
 import 'package:flutter_app/pages/tab_page.dart';
 import 'package:flutter_app/pages/test_page.dart';
+import 'pages/splash_page.dart';
 
 class HomePage extends StatefulWidget {
   @override

@@ -1,8 +1,7 @@
 path="lib/widget/"
 
-button:    ^0.2.0
+group="fapi"
 
-
-radio: ^0.3.0
+button: ^0.0.2
 
 
