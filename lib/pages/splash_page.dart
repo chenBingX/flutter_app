@@ -25,10 +25,7 @@ class _SplashPage extends State<SplashPage> {
         children: <Widget>[
           SizedBox.expand(
             child: ClipRect(
-                child: Image.asset(
-              "lib/icon/pic.jpg",
-              fit: BoxFit.cover,
-            )),
+                child: Image.asset("icon/pic.jpg", package: 'flutter_app', fit: BoxFit.cover,)),
           ),
           GestureDetector(
             // 设置点击事件

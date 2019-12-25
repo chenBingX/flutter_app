@@ -1,5 +1,8 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_app/datas/product.dart';
+import 'package:flutter_app/widget/pulltorefresh.dart';
 
 class ListViewPage extends StatefulWidget {
   @override
@@ -37,12 +40,26 @@ class _ListViewPage extends State<ListViewPage> {
     );
   }
 
+  ScrollPhysics scrollPhysics = new RefreshAlwaysScrollPhysics();
+  TriggerPullController triggerPullController = new TriggerPullController();
+
   _buildBody() {
-    return ListView.builder(
-        itemCount: productList.length,
-        itemBuilder: (BuildContext context, int index) {
-          return _buildItem(context, index);
-        });
+    return PullAndPush(
+        loadData: (isPullDown) async {
+          await _loadData(isPullDown);
+        },
+        scrollPhysicsChanged: (ScrollPhysics physics) {
+          //这个不用改，照抄即可；This does not need to change，only copy it
+          setState(() {
+            scrollPhysics = physics;
+          });
+        },
+        triggerPullController: triggerPullController,
+        listView: ListView.builder(
+            itemCount: productList.length,
+            itemBuilder: (BuildContext context, int index) {
+              return _buildItem(context, index);
+            }));
   }
 
   _buildItem(BuildContext context, int index) {
@@ -104,10 +121,10 @@ class _ListViewPage extends State<ListViewPage> {
                     ),
                     GestureDetector(
                       onTap: () => {
-                            setState(() {
-                              product.favorite = !product.favorite;
-                            })
-                          },
+                        setState(() {
+                          product.favorite = !product.favorite;
+                        })
+                      },
                       child: Icon(
                         Icons.favorite,
                         color: product.favorite ? Colors.red : Colors.grey[300],
@@ -119,5 +136,15 @@ class _ListViewPage extends State<ListViewPage> {
         ),
       ),
     );
+  }
+
+  Future _loadData(bool isPullDown) async {
+    sleep(Duration(milliseconds: 3000));
+    setState(() {
+      //拿到数据后，对数据进行梳理
+      if (isPullDown) {
+        productList.addAll(productList);
+      }
+    });
   }
 }

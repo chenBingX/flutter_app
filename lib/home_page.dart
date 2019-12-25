@@ -19,7 +19,6 @@ import 'package:flutter_app/pages/scanffold_page.dart';
 import 'package:flutter_app/pages/single_child_scroll_view_page.dart';
 import 'package:flutter_app/pages/tab_page.dart';
 import 'package:flutter_app/pages/test_page.dart';
-import 'pages/splash_page.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -133,8 +132,8 @@ class _HomePage extends State<HomePage> {
             MaterialPageRoute(builder: (context) => CustomPainterPage2()));
       }),
       Page('button', (context) {
-        Navigator.push(context,
-            MaterialPageRoute(builder: (context) => SplashPage()));
+//        Navigator.push(context,
+//            MaterialPageRoute(builder: (context) => GalleryApp()));
       }),
     ];
   }

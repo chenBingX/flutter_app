@@ -2,6 +2,6 @@ path="lib/widget/"
 
 group="fapi"
 
-button: ^0.0.2
-
+button: ~1.0.0
+filter: 0.0.1
 
